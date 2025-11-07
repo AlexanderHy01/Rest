@@ -1,0 +1,19 @@
+RewriteEngine On
+
+# 1️⃣ Redirigir HTTP a HTTPS
+RewriteCond %{HTTPS} off
+RewriteRule ^ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
+
+# 2️⃣ Quitar www
+RewriteCond %{HTTP_HOST} ^www\.(.+)$ [NC]
+RewriteRule ^ https://%1%{REQUEST_URI} [L,R=301]
+
+# 3️⃣ Proteger api.php por parámetro id
+RewriteCond %{REQUEST_URI} ^/Programas/rest_dao/reutilizable/api\.php$ [NC]
+RewriteCond %{QUERY_STRING} !(^|&)id=[0-9]+(&|$)
+RewriteRule ^ /Programas/rest_dao/reutilizable/error.html [L,R=403]
+
+# 4️⃣ Página de errores genérica
+ErrorDocument 403 /Programas/rest_dao/reutilizable/error.html
+ErrorDocument 404 /Programas/rest_dao/reutilizable/error.html
+ErrorDocument 500 /Programas/rest_dao/reutilizable/error.html

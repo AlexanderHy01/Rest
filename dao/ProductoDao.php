@@ -9,7 +9,7 @@
             $stmt->execute();
             return $stmt->fetchAll(PDO::FETCH_ASSOC);
         }
-        public funcion porId(int $id): ?array{
+        public function porId(int $id): ?array{
             $stmt = $this->pdo->prepare("SELECT * FROM productos WHERE id = :id");
             $stmt->bindParam(':id', $id, PDO::PARAM_INT);
             $stmt->execute();
